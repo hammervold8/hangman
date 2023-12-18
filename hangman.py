@@ -1,7 +1,7 @@
 import random, os
 
 def choose_doc():
-    docs = os.listdir("/Users/aleksanderhammervold/Library/CloudStorage/OneDrive-Trøndelagfylkeskommune/VG2/Matte R1/programmering/hangman")
+    docs = os.listdir("wordlists")
 
     wordlists = []
 
@@ -18,7 +18,7 @@ def choose_doc():
 
 def getWord():
     chosen_doc = choose_doc()
-    with open(f"/Users/aleksanderhammervold/Library/CloudStorage/OneDrive-Trøndelagfylkeskommune/VG2/Matte R1/programmering/hangman/{chosen_doc}") as word_table:
+    with open(f"wordlists/{chosen_doc}") as word_table:
         words = word_table.read().lower().split()
     wordstring = random.choice(words)
     word = [x for x in wordstring]
