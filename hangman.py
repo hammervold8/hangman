@@ -1,5 +1,119 @@
 import random, os
 
+def printImg(imagenum):
+    if imagenum == 6:
+        print('''
+                 ________________________________________________
+                |                                                |
+                |                                                |
+                |                                                |
+                |                                                |   
+                |                   Welcome to                   |
+                |                                                |
+                |                    HANGMAN!                    |
+                |                                                |   
+                |                                                |
+                |                                                |       
+                |________________________________________________|
+                \n\n''')
+    elif imagenum == 5:
+        print('''
+                 ________________________________________________
+                |                                                |
+                |           |                                    |
+                |           |                                    |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |      _____|_____                               |       
+                |_____/___________\______________________________|
+                \n\n''')
+    elif imagenum == 4:
+        print('''
+                 ________________________________________________
+                |           _______________                      |
+                |           | /                                  |
+                |           |/                                   |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |      _____|_____                               |       
+                |_____/___________\______________________________|
+                \n\n''')
+    elif imagenum == 3:
+        print('''
+                 ________________________________________________
+                |           _______________                      |
+                |           | /           |                      |
+                |           |/            |                      |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |      _____|_____                               |       
+                |_____/___________\______________________________|
+                \n\n''')
+    elif imagenum == 2:
+        print('''
+                 ________________________________________________
+                |           _______________                      |
+                |           | /           |                      |
+                |           |/           _|_                     |
+                |           |           /* *\                    |
+                |           |           \___/                    |   
+                |           |                                    |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |      _____|_____                               |       
+                |_____/___________\______________________________|
+                \n\n''')
+    elif imagenum == 1:
+        print('''
+                 ________________________________________________
+                |           _______________                      |
+                |           | /           |                      |
+                |           |/           _|_                     |
+                |           |           /* *\                    |
+                |           |           \___/                    |   
+                |           |          \__|__/                   |
+                |           |                                    |
+                |           |                                    |   
+                |           |                                    |
+                |      _____|_____                               |       
+                |_____/___________\______________________________|
+                \n\n''')
+    elif imagenum == 0:
+        print('''
+                 ________________________________________________
+                |           _______________                      |
+                |           | /           |                      |
+                |           |/           _|_                     |
+                |           |           /x x\     YOU LOST       |
+                |           |           \___/     YOU LOST       |   
+                |           |          \__|__/    YOU LOST       |
+                |           |             |       YOU LOST       |
+                |           |            / \      YOU LOST...    |   
+                |           |           /   \                    |
+                |      _____|_____                               |       
+                |_____/___________\______________________________|
+                \n\n''')
+
+def clear_terminal():
+    # Check the system platform
+    if os.name == 'nt':  # For Windows
+        _ = os.system('cls')
+    else:  # For Mac and Linux
+        _ = os.system('clear')
+
 def choose_doc():
     docs = os.listdir("wordlists")
 
@@ -32,10 +146,11 @@ def main():
     guessed_letters = []
     missing_letters = len(word)
 
+    clear_terminal()
+    printImg(6)
+
     for i in range(len(word)):
         hidden_word.append("_")
-    
-    print(hidden_word)
     
     attempts = 5
     while attempts > 0:
@@ -47,11 +162,21 @@ def main():
             print("Congratulations! You won!")
             print(f"The word was {wordstring.capitalize()}")
             break
-        
+
+        if attempts != 5:
+            printImg(attempts)
+
         if len(guessed_letters) > 0:
             print(f"Guesses: {guessed_letters}")
 
+        print(hidden_word, "\n")
+
         guess = input(f"You have {attempts} attempts left. Guess here: ").lower()
+
+        clear_terminal()
+
+        if attempts == 5:
+            printImg(attempts)
 
         if len(guess) > 1:
             guess_list = [x for x in guess]
@@ -85,9 +210,10 @@ def main():
             guessed_letters.append(guess.capitalize())
             missing_letters -= len(positions)
         
-        print(hidden_word, "\n")
+        # print(hidden_word, "\n")
     
     if attempts == 0:
+        printImg(attempts)
         print("You lost! You ran out of attempts!")
         print(f"The word was {wordstring.capitalize()}")
 
